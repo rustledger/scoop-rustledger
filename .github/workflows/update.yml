@@ -49,7 +49,7 @@ jobs:
           {
               "version": "${VERSION}",
               "description": "Fast, pure Rust implementation of Beancount double-entry accounting",
-              "homepage": "https://github.com/rustledger/rustledger",
+              "homepage": "https://rustledger.github.io",
               "license": "GPL-3.0-only",
               "architecture": {
                   "64bit": {
