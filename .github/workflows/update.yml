@@ -1,0 +1,101 @@
+name: Update Manifest
+
+on:
+  repository_dispatch:
+    types: [release]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to update to (e.g., 1.0.0-rc.18)'
+        required: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            VERSION="${{ github.event.client_payload.version }}"
+          else
+            VERSION="${{ github.event.inputs.version }}"
+          fi
+          # Strip "v" prefix if present
+          VERSION="${VERSION#v}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Updating to version: $VERSION"
+
+      - name: Get checksums
+        id: checksums
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+
+          HASH_X64=$(curl -sL "https://github.com/rustledger/rustledger/releases/download/v${VERSION}/rustledger-v${VERSION}-x86_64-pc-windows-msvc.zip" | sha256sum | cut -d' ' -f1)
+          HASH_ARM64=$(curl -sL "https://github.com/rustledger/rustledger/releases/download/v${VERSION}/rustledger-v${VERSION}-aarch64-pc-windows-msvc.zip" | sha256sum | cut -d' ' -f1)
+
+          echo "hash_x64=$HASH_X64" >> $GITHUB_OUTPUT
+          echo "hash_arm64=$HASH_ARM64" >> $GITHUB_OUTPUT
+
+      - name: Update manifest
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          HASH_X64="${{ steps.checksums.outputs.hash_x64 }}"
+          HASH_ARM64="${{ steps.checksums.outputs.hash_arm64 }}"
+
+          cat > bucket/rustledger.json << EOF
+          {
+              "version": "${VERSION}",
+              "description": "Fast, pure Rust implementation of Beancount double-entry accounting",
+              "homepage": "https://github.com/rustledger/rustledger",
+              "license": "GPL-3.0-only",
+              "architecture": {
+                  "64bit": {
+                      "url": "https://github.com/rustledger/rustledger/releases/download/v${VERSION}/rustledger-v${VERSION}-x86_64-pc-windows-msvc.zip",
+                      "hash": "${HASH_X64}"
+                  },
+                  "arm64": {
+                      "url": "https://github.com/rustledger/rustledger/releases/download/v${VERSION}/rustledger-v${VERSION}-aarch64-pc-windows-msvc.zip",
+                      "hash": "${HASH_ARM64}"
+                  }
+              },
+              "bin": [
+                  "rledger-check.exe",
+                  "rledger-format.exe",
+                  "rledger-query.exe",
+                  "rledger-report.exe",
+                  "rledger-doctor.exe",
+                  "rledger-extract.exe",
+                  "rledger-price.exe",
+                  "bean-check.exe",
+                  "bean-format.exe",
+                  "bean-query.exe",
+                  "bean-report.exe",
+                  "bean-doctor.exe",
+                  "bean-extract.exe",
+                  "bean-price.exe"
+              ],
+              "checkver": "github",
+              "autoupdate": {
+                  "architecture": {
+                      "64bit": {
+                          "url": "https://github.com/rustledger/rustledger/releases/download/v\$version/rustledger-v\$version-x86_64-pc-windows-msvc.zip"
+                      },
+                      "arm64": {
+                          "url": "https://github.com/rustledger/rustledger/releases/download/v\$version/rustledger-v\$version-aarch64-pc-windows-msvc.zip"
+                      }
+                  }
+              }
+          }
+          EOF
+
+      - name: Commit and push
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add bucket/rustledger.json
+          git commit -m "Update rustledger to ${VERSION}" || exit 0
+          git push
