@@ -14,20 +14,8 @@
         }
     },
     "bin": [
-        "rledger-check.exe",
-        "rledger-format.exe",
-        "rledger-query.exe",
-        "rledger-report.exe",
-        "rledger-doctor.exe",
-        "rledger-extract.exe",
-        "rledger-price.exe",
-        "bean-check.exe",
-        "bean-format.exe",
-        "bean-query.exe",
-        "bean-report.exe",
-        "bean-doctor.exe",
-        "bean-extract.exe",
-        "bean-price.exe"
+        "rledger.exe",
+        "rledger-lsp.exe"
     ],
     "checkver": "github",
     "autoupdate": {

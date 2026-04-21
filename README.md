@@ -21,15 +21,10 @@ After installation, you'll have access to:
 
 | Command | Description |
 |---------|-------------|
-| `rledger-check` | Validate ledger files |
-| `rledger-format` | Auto-format beancount files |
-| `rledger-query` | Run BQL queries |
-| `rledger-report` | Generate reports |
-| `rledger-doctor` | Debugging tools |
-| `rledger-extract` | Import from CSV/OFX |
-| `rledger-price` | Fetch commodity prices |
+| `rledger` | Main CLI (`rledger check`, `rledger format`, `rledger query`, etc.) |
+| `rledger-lsp` | Language Server Protocol implementation |
 
-Python beancount compatibility aliases (`bean-*`) are also included.
+For Python beancount compatibility aliases (`bean-check`, `bean-format`, etc.), run `rledger compat install`.
 
 ## Links
 
