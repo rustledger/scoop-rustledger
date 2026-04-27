@@ -6,11 +6,11 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/rustledger/rustledger/releases/download/v0.14.0/rustledger-v0.14.0-x86_64-pc-windows-msvc.zip",
-            "hash": "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+            "hash": "428cc166e8e0b80f33384cb0651bd48b7663df81264657016b3e13059567de16"
         },
         "arm64": {
             "url": "https://github.com/rustledger/rustledger/releases/download/v0.14.0/rustledger-v0.14.0-aarch64-pc-windows-msvc.zip",
-            "hash": "0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5"
+            "hash": "98c4444bc9a523c8406cf194608a2dc4355c8a245195a04280d57679fb147f6b"
         }
     },
     "bin": [
