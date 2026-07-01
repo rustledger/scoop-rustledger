@@ -1,16 +1,16 @@
 {
-    "version": "0.17.3",
+    "version": "0.17.4",
     "description": "Fast, pure Rust implementation of Beancount double-entry accounting",
     "homepage": "https://rustledger.github.io",
     "license": "GPL-3.0-only",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/rustledger/rustledger/releases/download/v0.17.3/rustledger-v0.17.3-x86_64-pc-windows-msvc.zip",
-            "hash": "4522eaab906c9b4e455c339cb7fe30b8d6411b8e0a13a8a5354113bb15ad14e1"
+            "url": "https://github.com/rustledger/rustledger/releases/download/v0.17.4/rustledger-v0.17.4-x86_64-pc-windows-msvc.zip",
+            "hash": "6ff9ae23984f1ba425282a11f6317dd2a6e9f5f09f329345d130ba099fb66c94"
         },
         "arm64": {
-            "url": "https://github.com/rustledger/rustledger/releases/download/v0.17.3/rustledger-v0.17.3-aarch64-pc-windows-msvc.zip",
-            "hash": "4daacc077e80228d29f05e019d205622c95b1e55850c29cc970e937896923e53"
+            "url": "https://github.com/rustledger/rustledger/releases/download/v0.17.4/rustledger-v0.17.4-aarch64-pc-windows-msvc.zip",
+            "hash": "ac8c471c1d66943a88c807e0d1aefc70f56eeeb0750332e5f08325893b4964f3"
         }
     },
     "bin": [
